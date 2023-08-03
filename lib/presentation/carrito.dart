@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:elotes_make/bloc/carrito/carrito_bloc.dart';
 import '../themes/custom.dart';
@@ -26,8 +27,21 @@ class Carrito {
           child: FloatingActionButton(
             backgroundColor: state.servicio ? customTheme.secondary : Colors.grey,
             tooltip: 'Ver carrito',
-            onPressed: state.servicio ? () {
-              Navigator.pushNamed(_, "orden");
+            onPressed: state.servicio ? () async {
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              if(prefs.getInt("id") == null) {
+                showDialog(context: _, barrierDismissible: false, builder: (_) {
+                  return AlertDialog(
+                    title: const Text('Aviso'),
+                    content: const Text('Lo sentimos, inicia sesión o regístrate para poder ordenar'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.of(_).pop(), child: const Text('Cerrar'))
+                    ],
+                  );
+                });
+              } else {
+                Navigator.pushNamed(_, "orden");
+              }              
             } : null,
             child: const Icon(Icons.shopping_cart),
           ),

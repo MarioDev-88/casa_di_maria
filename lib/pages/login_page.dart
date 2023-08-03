@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -49,6 +51,26 @@ class _LoginPageState extends State<LoginPage> {
               _crearCorreo(),
               _crearPwd(),
               _crearBoton(context),
+              Visibility(
+                visible: Platform.isIOS,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'select');
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: const Text('Iniciar como invitado', 
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0
+                      )),
+                      margin: const EdgeInsets.all(10.0),
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

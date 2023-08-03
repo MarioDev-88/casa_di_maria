@@ -108,7 +108,6 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
     final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol:"\$");
     final args = ModalRoute.of(context)!.settings.arguments as PlatillosArguments;
     servicio = args.servicio;
-    print(servicio);
     pedido.platillo = args.idCategoria;
     pedido.nombrePlatillo = args.nombre;
     pedido.cantidad = widget.cantidad;

@@ -127,9 +127,14 @@ class _NavbarState extends State<Navbar> {
 
   _loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _nombreUsuario = prefs.getString('nombre') ?? '';
-      _correoUsuario = prefs.getString('email') ?? '';
-    });
+    if(prefs.getInt("id") != "null") {
+      setState(() {
+        _nombreUsuario = prefs.getString('nombre') ?? '';
+        _correoUsuario = prefs.getString('email') ?? '';
+      });
+    } else {
+      _nombreUsuario = "Inicia sesión o regístrate";
+    }
+    
   }
 }

@@ -66,8 +66,6 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
   Future<bool> _onWillPop() async {
     if(BlocProvider.of<CarritoBloc>(context).state.pedidos.isNotEmpty){
-      print('carrito');
-
       return (await showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -178,7 +176,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
   }
 
   void _fetchDetalle() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();    
     final _response = await http.post(
       _urlDetalle,
       headers: headers,
@@ -187,10 +185,14 @@ class _RestaurantPageState extends State<RestaurantPage> {
     if(_response.statusCode == 200) {
       final data = jsonDecode(_response.body);
       setState(() {
-        if(_servicio == "Servicio a domicilio") {
-          _listado.addAll(prefs.getStringList('address') as Iterable<String>);
-          _direccionUsuario = prefs.getString('actualAddress') ?? '';
-        }
+        if(prefs.getInt("id") != "null") {
+          if(_servicio == "Servicio a domicilio") {
+            _listado.addAll(prefs.getStringList('address') as Iterable<String>);
+            _direccionUsuario = prefs.getString('actualAddress') ?? '';
+          }
+        } else {
+          _direccionUsuario = "Inicia sesión o regístrate";
+        }        
         _menu_completo = data['menu_completo'];
         _incluirPopulares = data['incluir_populares'];
         _incluirGaleria = data['incluir_galeria'];
