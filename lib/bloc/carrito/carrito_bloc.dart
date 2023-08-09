@@ -19,15 +19,16 @@ class CarritoBloc extends Bloc<CarritoEvent, CarritoState>{
     });
 
     on<CarritoUpdateEvent>((event, emit) {
-      
       if(!event.edit) {
         state.pedido!.add(event.newPedido);
         state.total = (double.parse(state.total) + double.parse(event.newTotal)).toString();
       } else {
+        double _total = 0.0;
         state.pedido![event.index] = event.newPedido;
-        //final example = (double.parse(event.newTotal) - double.parse(event.newPedido.precio)).toString();
-        state.total = (double.parse(event.newTotal)).toString();
-        //state.total = (double.parse(event.newTotal)).toString(); //(double.parse(event.newTotal)).toString();
+        state.pedido!.forEach((element) {
+          _total += double.parse(element.total);
+        });        
+        state.total = _total.toString();
       }
       emit(CarritoUpdateState( state.total, state.pedido!));
     });
