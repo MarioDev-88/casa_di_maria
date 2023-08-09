@@ -238,17 +238,6 @@ class _SelectMainPageState extends State<SelectMainPage> {
   
   Future<void> _goMap() async {
     MapsLauncher.launchQuery(_direccion);
-    // final Uri launchUri = Uri(
-    //   scheme: 'https',
-    //   host: 'maps.google.com',
-    //   queryParameters: {
-    //     'q' : _direccion
-    //   } 
-    // );
-
-    // if(await canLaunchUrl(launchUri)) {
-    //   launchUrl(launchUri);
-    // }
   }
 
   Future<void> _openModalSugerencia() async {

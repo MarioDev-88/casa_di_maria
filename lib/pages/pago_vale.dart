@@ -334,7 +334,7 @@ class _PagoValePageState extends State<PagoValePage> {
         showDialog(context: context, barrierDismissible: false, builder: (context) {          
           return AlertDialog(            
             title: Text(appName),
-            content: const Text('Value de consumo comprado'),
+            content: const Text('Vale de consumo comprado'),
             actions: [
               TextButton(
                 onPressed: (){
