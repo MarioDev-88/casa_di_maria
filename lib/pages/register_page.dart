@@ -91,8 +91,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   label: const Text('Teléfono')
                 ),
                 validator: (String? value) {
-                  if(value == null || value.isEmpty) {
-                    return 'Ingrese su teléfono';
+                  if(value == null || value.isEmpty || value.length < 10) {
+                    return 'Ingrese su teléfono / Teléfono menor a 10 dígitos';
                   }
                   return null;
                 },
