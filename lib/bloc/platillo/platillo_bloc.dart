@@ -61,24 +61,23 @@ class PlatilloBloc extends Bloc<PlatilloEvent, PlatilloState> {
     on<ChangeAdicionMultiplePrecioEvent>((event, emit) {
       state.precioMultiple = "0";
       state.precioListaMultiple = state.precioListaMultiple ?? [];
-      if(state.precioListaMultiple!.indexOf(event.newAdicionMultiple) == -1) {
-        state.precioListaMultiple!.add(event.newAdicionMultiple);
-      } else {
+      state.precioListaMultiple!.add(event.newAdicionMultiple);
+      state.precioListaMultiple!.forEach((el){
+        if(el.isNotEmpty) {
+          state.precioMultiple = (double.parse(state.precioMultiple) + double.parse(el)).toString();
+        }        
+      }); 
+      state.total = ((double.parse(state.precio) + double.parse(state.precioSimple) + double.parse(state.precioMultiple)) * state.cantidad).toString();
+      emit(PlatilloAdicionMultipleState(state.total, state.precioListaMultiple!, state.cantidad, state.precio, state.precioMultiple, state.precioSencillo!, state.precioSimple));
+    });    
+
+    on<ChangeAdicionMultiplePrecioRemoveEvent>((event, emit) {
+      state.precioMultiple = "0";
+      state.precioListaMultiple = state.precioListaMultiple ?? [];
+      if(state.precioListaMultiple!.indexOf(event.newAdicionMultiple) >= 0) {
         final index = state.precioListaMultiple!.indexOf(event.newAdicionMultiple);
-         state.precioListaMultiple!.removeAt(index);
-      }
-      // if(state.precioListaMultiple!.isEmpty) {
-      //   //state.precioListaMultiple = event.newPrecioListaMultiple;
-      //   //state.precioListaMultiple!.insert(event.posicion, event.newAdicionMultiple);
-      //   state.precioListaMultiple!.add(event.newAdicionMultiple);
-      // } else {
-      //   try {
-      //     state.precioListaMultiple!.removeAt(event.posicion);
-      //     state.precioListaMultiple!.insert(event.posicion, event.newAdicionMultiple);          
-      //   } catch (e) {
-      //     state.precioListaMultiple!.insert(event.posicion, event.newAdicionMultiple);
-      //   }
-      // }
+        state.precioListaMultiple!.removeAt(index);
+      } 
       state.precioListaMultiple!.forEach((el){
         if(el.isNotEmpty) {
           state.precioMultiple = (double.parse(state.precioMultiple) + double.parse(el)).toString();

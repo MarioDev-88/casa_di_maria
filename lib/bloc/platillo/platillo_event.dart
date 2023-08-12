@@ -41,3 +41,11 @@ class ChangeAdicionMultiplePrecioEvent extends PlatilloEvent {
 
   ChangeAdicionMultiplePrecioEvent(this.newAdicionMultiple, this.posicion, this.newPrecioListaMultiple);
 }
+
+class ChangeAdicionMultiplePrecioRemoveEvent extends PlatilloEvent {
+  final String newAdicionMultiple;
+  final int posicion;
+  final List<String> newPrecioListaMultiple;
+
+  ChangeAdicionMultiplePrecioRemoveEvent(this.newAdicionMultiple, this.posicion, this.newPrecioListaMultiple);
+}

@@ -1148,11 +1148,16 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
     }    
   }
 
-  void _openAddCard() {
-    Navigator.pushNamed(
+  void _openAddCard() async {
+    final result = await Navigator.pushNamed(
       context, 
       'add_card',
       arguments: AddCardArguments(_idTarjeta)
-    ).then((value) => getServicio);
+    );
+    if(result == null) {
+      Future.delayed(const Duration(seconds: 1), () {
+        getServicio();
+      });
+    }
   }
 }

@@ -20,7 +20,7 @@ class DetallePage extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as PlatillosArguments;
     final PlatillosService _platillosService = PlatillosService();
     return Scaffold(
-      appBar: AppBar(title: Text(args.nombre)),      
+      appBar: AppBar(title: Text(args.nombre), backgroundColor: Colors.black,),      
       body: BlocProvider<PlatilloBloc>(
         lazy: false,
         create: (context) => PlatilloBloc(args.cantidad, args.precio)..add(InitialPlatillo(args.cantidad, args.precio)),
@@ -70,6 +70,8 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
   late List<String> _currentOptionSimple;
   late List<String> _currentSimple;
   late List<String> _currentOptionMultiple;
+  late List _limiteOpcionMultiple;
+  late List _limiteOpcionMultipleOriginal;
   String currentOptionSimple = "";
   Map _optionsMultiple = {};
   String servicio = "";
@@ -87,6 +89,8 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
     _currentOptionSimple = [];
     _currentSimple = [];
     _currentOptionMultiple = [];
+    _limiteOpcionMultiple = [];
+    _limiteOpcionMultipleOriginal = [];
   }
 
   @override
@@ -101,6 +105,8 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
     _arrayObligatoriosMultipleOriginal.clear();
     _arrayAdicionesSimples.clear();
     precioSencillo.clear();
+    _limiteOpcionMultiple.clear();
+    _limiteOpcionMultipleOriginal.clear();
   }
 
   @override
@@ -162,7 +168,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
               topRight: Radius.circular(50.0),
             ),
             child: BottomAppBar(
-              color: customTheme.primary,
+              color: customTheme.secondary,
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +188,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
         child: FutureBuilder(
           future: widget.platillosService.getPlatillo(args.idCategoria),
           builder: (_, AsyncSnapshot<Platillos> snapshot) {
-            if(snapshot.hasData) {
+            if(snapshot.hasData) {              
               _buildAdicionSimple(snapshot.data!);
               return _showResult(snapshot.data!, context);
             } else {
@@ -225,22 +231,33 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
         }
       }
     }
+    if(_limiteOpcionMultiple.isEmpty) {
+      _limiteOpcionMultiple = List.generate(platillos.adiciones.length, (index) => platillos.adiciones[index]['limite']).toList();
+      _limiteOpcionMultipleOriginal = [..._limiteOpcionMultiple];
+    }
     if(_currentOptionMultiple.isEmpty) {
       _currentOptionMultiple = List.generate(platillos.adiciones.length, (index) => "").toList();
       if(widget.isEdit){
         for(var i=0; i < platillos.adiciones.length; i ++) {
-          final indexParent = i;
+          final indexParent = i;          
           for(var index in platillos.adiciones[i]['ingredientes']) {
             widget.adiciones.forEach((element) {
               if(element['id'] == index['id_adicion']) {
                 _arrayObligatoriosMultiple[indexParent] = false;
                 _optionsMultiple[index['id_adicion']] = index;
-                pedido.agregarAdicion(element);
-                BlocProvider.of<PlatilloBloc>(context)
+                if(_limiteOpcionMultipleOriginal[i] != 0) {
+                  _limiteOpcionMultiple[i] -= 1;
+                  element['precio'] = "0";
+                  BlocProvider.of<PlatilloBloc>(context)
+                  .add(ChangeAdicionMultiplePrecioEvent("0", indexParent, _currentOptionMultiple));
+                } else {
+                  BlocProvider.of<PlatilloBloc>(context)
                     .add(ChangeAdicionMultiplePrecioEvent(index['precio'], indexParent, _currentOptionMultiple));
+                } 
+                pedido.agregarAdicion(element);                
               }
             });
-          }          
+          }
         }
       }
     }
@@ -331,7 +348,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
             onPressed: () {
               BlocProvider.of<PlatilloBloc>(context).add(ChangeQuantityLessEvent());
             },
-            child: const Text('-', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),),
+            child: const Text('-', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.red),),
           ),
           SizedBox(
             width: 50, 
@@ -348,7 +365,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
             onPressed: () {
               BlocProvider.of<PlatilloBloc>(context).add(ChangeQuantityEvent());
             },
-            child: const Text('+', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+            child: const Text('+', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.red)),
           ),
         ],
       ),
@@ -375,14 +392,14 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
               children: [
                 Container(
                   width: 6,
-                  color: customTheme.primary,
+                  color: customTheme.secondary,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
                     platillo[i]['titulo'],
                     style: TextStyle(
-                      color: customTheme.primary,
+                      color: customTheme.secondary,
                       fontSize: 18.0,
                       fontWeight: FontWeight.w600
                     ),
@@ -469,8 +486,9 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
  Widget  _showIngredients(List ingredientes, int posicion) {
     List<Widget> _ingrediente = [];  
     final options = List.generate(ingredientes.length, (index) => ingredientes[index]['nombre']);    
-    for(var i =0; i <= ingredientes.length-1; i++) {      
-      _ingrediente.add(
+    for(var i =0; i <= ingredientes.length-1; i++) {  
+      if(ingredientes[i]['nombre'] != null) {
+        _ingrediente.add(
         Row(
             children: [
               Expanded(
@@ -478,7 +496,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
                   RadioListTile(
                   dense: true,
                   value: options[i] as String, 
-                  activeColor: customTheme.primary,
+                  activeColor: customTheme.secondary,
                   groupValue: _currentOptionSimple[posicion],
                   title: Text(ingredientes[i]['nombre'], style: const TextStyle(fontSize: 18.0),),
                   subtitle: Text((ingredientes[i]['precio'] == "0") 
@@ -513,6 +531,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
             ],
           ),
       );
+      }
       _ingrediente.add(const Divider());
     }
     return Column(
@@ -523,7 +542,8 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
   Widget _showIngredientsMultiple(List ingredientes, int posicion) {
     List<Widget> _ingrediente = [];    
     for(var i=0; i <= ingredientes.length-1; i++) {
-      _ingrediente.add(
+      if(ingredientes[i]['nombre'] != null) {
+        _ingrediente.add(
         Row(
           mainAxisSize: MainAxisSize.min,
             children: [     
@@ -532,31 +552,39 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
                   dense: true,
                   controlAffinity: ListTileControlAffinity.leading,
                   value: _optionsMultiple.containsKey(ingredientes[i]['id_adicion']),
-                  activeColor: customTheme.primary,
+                  activeColor: customTheme.secondary,
                   onChanged: (value){
-                    setState(() {
-                      final adciones = {
-                        "id" : ingredientes[i]['id_adicion'],
-                        "precio" : ingredientes[i]['precio'],
-                        "cantidad" : 1,
-                        "nombre" : ingredientes[i]['nombre']
-                      };
-                      if(value == true) {                        
-                        pedido.agregarAdicion(adciones);
+                    setState(() {                      
+                      if(value == true) {
+                        final adiciones = {
+                          "id" : ingredientes[i]['id_adicion'],
+                          "precio" : (_limiteOpcionMultiple[posicion] == 0) ? ingredientes[i]['precio'] : "0",
+                          "cantidad" : 1,
+                          "nombre" : ingredientes[i]['nombre']
+                        };
+                        pedido.agregarAdicion(adiciones);
                         _optionsMultiple[ingredientes[i]['id_adicion']] = ingredientes[i];
                         if(_arrayObligatoriosMultipleOriginal[posicion]) {
                           _arrayObligatoriosMultiple[posicion] = false;
-                        }                        
+                        }
+                        if(_limiteOpcionMultiple[posicion] != 0 ) {
+                          _limiteOpcionMultiple[posicion] -= 1;
+                        }
+                        BlocProvider.of<PlatilloBloc>(context)
+                          .add(ChangeAdicionMultiplePrecioEvent(adiciones['precio'], i, _currentOptionMultiple));
                       } else {
-                        if(_arrayObligatoriosMultipleOriginal[posicion]) {
+                        if( !_arrayObligatoriosMultiple[posicion]) {
                           _arrayObligatoriosMultiple[posicion] = true;
                         }
                         _optionsMultiple.remove(ingredientes[i]['id_adicion']);
                         pedido.quitarAdicion(ingredientes[i]['id_adicion']);
-                      }                                    
-                    });
-                    BlocProvider.of<PlatilloBloc>(context)
-                      .add(ChangeAdicionMultiplePrecioEvent(ingredientes[i]['precio'], i, _currentOptionMultiple));                    
+                        if(_limiteOpcionMultiple[posicion] != _limiteOpcionMultipleOriginal[posicion]) {
+                          _limiteOpcionMultiple[posicion] += 1;
+                        }
+                        BlocProvider.of<PlatilloBloc>(context)
+                          .add(ChangeAdicionMultiplePrecioRemoveEvent(ingredientes[i]['precio'], i, _currentOptionMultiple));
+                      }
+                    });                    
                   },
                   title: Text(ingredientes[i]['nombre'], style: const TextStyle(fontSize: 17.0),),
                   subtitle: Text((ingredientes[i]['precio'] == "0") ? '' : ' + ${numberFormat.format(double.parse(ingredientes[i]['precio']))}', style: const TextStyle(fontSize: 15.0)),
@@ -565,6 +593,7 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
             ],
           ),
       );
+      }      
       _ingrediente.add(const Divider());
     }
     return Column(
@@ -593,15 +622,18 @@ class _InformacionPlatilloState extends State<InformacionPlatillo> {
                 children: [
                   Container(
                     width: 6,
-                    color: customTheme.primary,
+                    color: customTheme.secondary,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      platillo[i]['titulo'],
+                      (_limiteOpcionMultiple[i] == 0) ?
+                      "${platillo[i]['titulo']}" :
+                      "${platillo[i]['titulo']} \n (Hasta ${platillo[i]['limite']} sin costo)",
+                      maxLines: 2,
                       style: TextStyle(
-                        color: customTheme.primary,
-                        fontSize: 18.0,
+                        color: customTheme.secondary,
+                        fontSize: 17.0,
                         fontWeight: FontWeight.w600
                       ),
                     ),
