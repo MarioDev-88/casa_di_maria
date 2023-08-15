@@ -64,8 +64,8 @@ class _AddCardPageState extends State<AddCardPage> {
 
             fetchDataName() {
               controller.runJavaScriptReturningResult('getNameCard()').then((value) async {
-                if(value.toString().isEmpty || value.toString().length < 10) {
-                  _timeName = Timer(_timeDelay, fetchDataName);
+                if(value.toString().isEmpty || value.toString().length < 15) {
+                  _timeName = Timer(_timeDelay, fetchDataName);                  
                 } else {
                   final SharedPreferences prefs = await SharedPreferences.getInstance();
                   prefs.setString('tokenCard', value.toString());
@@ -175,20 +175,19 @@ class _AddCardPageState extends State<AddCardPage> {
       headers: headers,
       body: jsonEncode(paramsAdd)
     );
-    
     List _response = jsonDecode(_resAdd.body);
     bool _isSrPago = false;
     String _error = "";
-    if(_response.contains("msg_pago")) {
-      _isSrPago = _response[0]['msg_pago'];
+    if(_response.contains("msg_srpago")) {
+      _isSrPago = _response[0]['msg_srpago'];
       _error = _response[0]['error'];
-    }
-    if(_isSrPago) {
-      if(_error.isNotEmpty) {
+    }     
+    if(_response.contains("msg_srpago") || _response[0]['msg_srpago'] == true) {
+      if(_response.contains("error") || _response[0]['error'] != "") {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.red,
-            content: Text(_error),
+            content: Text(_response[0]['error']),
             duration: const Duration(seconds: 5),
             behavior: SnackBarBehavior.floating,
           )
