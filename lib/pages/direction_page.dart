@@ -57,24 +57,7 @@ class _DirectionPageState extends State<DirectionPage> {
             Container(
               margin: const EdgeInsets.all(15.0),
               child: Focus(
-                onFocusChange: (value) {
-                  // if(!value) {
-                  //   if(!_isMatch) {                   
-                  //     showDialog(context: context, barrierDismissible: false, builder: (_) {
-                  //       return AlertDialog(
-                  //         title: const Text('Aviso'),
-                  //         content: const Text('Colonia no esta dentro de la cobertura'),
-                  //         actions: [
-                  //           TextButton(onPressed: () {
-                  //             FocusScope.of(context).requestFocus(focusNode);
-                  //             Navigator.of(context).pop();
-                  //           }, child: const Text('Cerrar'))
-                  //         ],
-                  //       );
-                  //     });
-                  //   }
-                  // }
-                },
+                onFocusChange: (value) {},
                 child: Autocomplete<String>(          
                   fieldViewBuilder: (context, _colonia, _focusNode, onFieldSubmitted) => TextFormField(
                     controller: _colonia,
@@ -123,10 +106,10 @@ class _DirectionPageState extends State<DirectionPage> {
                     if(_textEditingValue.text.isEmpty) {                    
                       return List.empty();
                     }
-                    var result = _colonias.where((String option) => option.contains(_textEditingValue.text));
+                    var result = _colonias.where((String option) => option.toLowerCase().contains(_textEditingValue.text.toLowerCase()));
                     if(result.isNotEmpty) {                      
                       return _colonias.where((String option) {                        
-                        return option.contains(_textEditingValue.text);
+                        return option.toLowerCase().contains(_textEditingValue.text.toLowerCase());
                       });
                     } else {
                       _isMatch = false;
