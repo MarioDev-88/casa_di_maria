@@ -614,6 +614,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
   servicioDisponible(List horarios) {
     var getNow = '${now.hour.toString()}:${now.minute.toString()}:${now.second.toString()}';
+    if(now.hour.toString().length == 1) {
+      getNow = '0${now.hour.toString()}:${now.minute.toString()}:${now.second.toString()}';
+    }
     for(Map x in horarios) {
       if(x.containsKey("8")) {
         x.forEach((key, value) {             
