@@ -172,7 +172,7 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
           padding: const EdgeInsets.all(5.0),
           child: (_finalTotal == "0") ? 
             Center(heightFactor: 1,
-            widthFactor: 1, child: SizedBox(child: CircularProgressIndicator(color: customTheme.primary,))) : Text(
+            widthFactor: 1, child: SizedBox(child: CircularProgressIndicator(color: customTheme.secondary,))) : Text(
             'Realizar pedido ${numberFormat.format(double.parse(_finalTotal))}',
             textAlign: TextAlign.center,
             style: const TextStyle(
