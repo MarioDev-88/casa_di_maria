@@ -166,11 +166,13 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: GestureDetector(
-        onTap: _showModalOrden,
+        onTap: (_finalTotal == "0") ? null : _showModalOrden,
         child: BottomAppBar(        
           color: customTheme.primary,
           padding: const EdgeInsets.all(5.0),
-          child: Text(
+          child: (_finalTotal == "0") ? 
+            Center(heightFactor: 1,
+            widthFactor: 1, child: SizedBox(child: CircularProgressIndicator(color: customTheme.primary,))) : Text(
             'Realizar pedido ${numberFormat.format(double.parse(_finalTotal))}',
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -605,11 +607,11 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
           title: Container(
             height: 80,
             color: Colors.yellow,
-            child: const Center(
+            child: Center(
               child: Text(
-                'Tu pedido sera entregado \nen:',
+                (servicio == "Servicio a domicilio") ? 'Tu pedido sera entregado \nen:' : appName,
                 textAlign: TextAlign.center,            
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.w600
                 ),
@@ -626,7 +628,7 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: SizedBox(
                     child: Text(
-                      direccionActual,
+                      (servicio == "Servicio a domicilio") ? direccionActual : 'Recoger en lugar',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 28.0,
