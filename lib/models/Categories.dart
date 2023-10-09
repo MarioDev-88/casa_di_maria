@@ -14,7 +14,7 @@ class Categories {
   static Categories fromJson(Map json) {
     return Categories(
       idCategoria : json['id_categoria'],
-      foto : json['foto'],
+      foto : json['foto'] ?? "",
       nombre : json['nombre'],
       fotoCat : json['foto_cat']
     );
