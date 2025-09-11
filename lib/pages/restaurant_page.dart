@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+//import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:elotes_make/bloc/carrito/carrito_bloc.dart';
-import 'package:elotes_make/presentation/delegates/search_product_delegate.dart';
-import 'package:elotes_make/models/Anuncios.dart';
-import 'package:elotes_make/system/arguments.dart';
-import 'package:elotes_make/themes/custom.dart';
-import 'package:elotes_make/system/globals.dart';
-import '../presentation/carrito.dart';
+//import 'package:cotizador_casa_di_maria/bloc/carrito/carrito_bloc.dart';
+import 'package:cotizador_casa_di_maria/presentation/delegates/search_product_delegate.dart';
+import 'package:cotizador_casa_di_maria/models/Anuncios.dart';
+import 'package:cotizador_casa_di_maria/system/arguments.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
+//import '../presentation/carrito.dart';
 
 class RestaurantPage extends StatefulWidget {
   const RestaurantPage({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
   DateTime now = DateTime.now();  
   late int dayOfWeek;
   String getHour = DateFormat('Hms').format(DateTime.now());
-  final carrito = Carrito();
+  //final carrito = Carrito();
   var unescape = HtmlUnescape();
   ScrollController _scrollController = ScrollController();
   final _urlAnuncios = Uri.https('zesty.com.mx', '/apps/apiapps/v1/anuncios/');
@@ -64,7 +64,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
     super.dispose();
   }
 
-  Future<bool> _onWillPop() async {
+  /*Future<bool> _onWillPop() async {
     if(BlocProvider.of<CarritoBloc>(context).state.pedidos.isNotEmpty){
       return (await showDialog(
         context: context,
@@ -84,14 +84,14 @@ class _RestaurantPageState extends State<RestaurantPage> {
     } 
     Navigator.pop(context, false);
     return false;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {    
     final args = ModalRoute.of(context)!.settings.arguments as AppArguments;
     _servicio = args.servicio;
     return WillPopScope(
-      onWillPop: _onWillPop,
+      onWillPop: null,
       child: Scaffold(
         appBar: AppBar(
           title: Text(appName),
@@ -104,9 +104,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
             )
           ],
         ),
-        floatingActionButton: carrito.showFloatingButton(),
+        //floatingActionButton: carrito.showFloatingButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: carrito.showBottomBar(),
+        //bottomNavigationBar: carrito.showBottomBar(),
         backgroundColor: Colors.yellow,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -622,11 +622,11 @@ class _RestaurantPageState extends State<RestaurantPage> {
         x.forEach((key, value) {             
           String _desde = value[0]['desde'];
           String _hasta = value[0]['hasta'];
-          if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
+          /*if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
             BlocProvider.of<CarritoBloc>(context).add(CarritoServicioEvent(true));
           } else {
             _showAlertClose();
-          }
+          }*/
         });
       } else if(x.containsKey("7")) {
         for(var dia in lunes_viernes) {
@@ -634,11 +634,11 @@ class _RestaurantPageState extends State<RestaurantPage> {
             x.forEach((key, value) {
               String _desde = value[0]['desde'];
               String _hasta = value[0]['hasta'];
-              if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
+              /*if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
                 BlocProvider.of<CarritoBloc>(context).add(CarritoServicioEvent(true));
               } else {
                 _showAlertClose();
-              }
+              }*/
             });
           }
         }
@@ -646,30 +646,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
         x.forEach((key, value) {
           String _desde = value[0]['desde'];
           String _hasta = value[0]['hasta'];
-          if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
+          /*if(_desde.compareTo(getNow) < 0 && _hasta.compareTo(getNow) > 0){
             BlocProvider.of<CarritoBloc>(context).add(CarritoServicioEvent(true));
           } else {
             _showAlertClose();
-          }
+          }*/
         });
       }
     }
-  }
-
-  _showAlertClose() {
-    BlocProvider.of<CarritoBloc>(context).add(CarritoServicioEvent(false));
-    showDialog(context: context, barrierDismissible: false, builder: (_) {
-      return AlertDialog(
-        title: const Text('Aviso'),
-        content: const Text('Lo sentimos, por el momento el servicio de pedido en linea no esta disponible'),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cerrar'))
-        ],
-      );
-    });
-  }
-
-  _showCarritoAlert() {
-    //print(BlocProvider.of<CarritoBloc>(context).state.pedidos.length);
   }
 }

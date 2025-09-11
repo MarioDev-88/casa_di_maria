@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:elotes_make/system/arguments.dart';
-import 'package:elotes_make/system/platillos_arguments.dart';
-import 'package:elotes_make/models/Categories.dart';
-import 'package:elotes_make/services/categories_service.dart';
+import 'package:cotizador_casa_di_maria/system/arguments.dart';
+import 'package:cotizador_casa_di_maria/system/platillos_arguments.dart';
+import 'package:cotizador_casa_di_maria/models/Categories.dart';
+import 'package:cotizador_casa_di_maria/services/categories_service.dart';
 import 'package:intl/intl.dart';
 
-import '../presentation/carrito.dart';
+//import '../presentation/carrito.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol:"\$");
-  final carrito = Carrito();
+  //final carrito = Carrito();
   final CategoriesService _categoriesService = CategoriesService();
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
         title: const Text('Categorías'),
       ),
       backgroundColor: Colors.yellow,
-      floatingActionButton: carrito.showFloatingButton(),
+      //floatingActionButton: carrito.showFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: carrito.showBottomBar(),
+      //bottomNavigationBar: carrito.showBottomBar(),
       body: SafeArea(
         child: FutureBuilder(
           future: _categoriesService.getCategories(),

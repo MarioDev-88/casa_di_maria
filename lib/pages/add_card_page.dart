@@ -8,9 +8,9 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:elotes_make/themes/custom.dart';
-import 'package:elotes_make/system/add_card_arguments.dart';
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/system/add_card_arguments.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 
 class AddCardPage extends StatefulWidget {
   const AddCardPage({Key? key}) : super(key: key);

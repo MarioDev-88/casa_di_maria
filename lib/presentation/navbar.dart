@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -12,8 +12,8 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
 
-  String _nombreUsuario = '';
-  String _correoUsuario = '';
+  String _nombreUsuario = 'Usuario';
+  String _correoUsuario = 'DC';
 
   @override
   void initState() {
@@ -24,43 +24,78 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color(0xFFF5F1F1),
       child: ListView(
-        padding: EdgeInsets.zero  ,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(_nombreUsuario), 
-            accountEmail: Text(_correoUsuario)),
-          const Divider(),
-          ListTile(
-            title: const Text('Perfil'),
-            leading: const Icon(Icons.account_box),
-            onTap: () => Navigator.pushNamed(context, "perfil"),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Imagen de perfil
+                const Icon(Icons.account_circle_outlined, size: 50, color: Color(0xFF253D5B)),
+                const SizedBox(width: 15),
+                // Información del usuario
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      _nombreUsuario,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF253D5B)),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _correoUsuario,
+                      style: const TextStyle(color: Color(0xFF253D5B), fontSize: 14),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const Divider(),
           ListTile(
-            title: const Text('Historial'),
-            leading: const Icon(Icons.history),
-            onTap: () => Navigator.pushNamed(context, "historial"),
+            title: const Text('Cotizar', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.note_add),
+            onTap: () => Navigator.pushNamed(context, "cotizar"),
           ),
-          const Divider(),
           ListTile(
-            title: const Text('Aviso de privacidad'),
-            leading: const Icon(Icons.privacy_tip),
+            title: const Text('Cotizaciones', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.request_quote),
+            onTap: () => Navigator.pushNamed(context, "cotizaciones"),
+          ),
+          ListTile(
+            title: const Text('Agenda', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.event_note),
             onTap: () {
-              Navigator.pushNamed(context, "politicas");
+              Navigator.pushNamed(context, "agenda");
             },
           ),
-          const Divider(),
           ListTile(
-            title: const Text('Cerrar sesión'),
+            title: const Text('Contratos', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.receipt_long_outlined),
+            onTap: () {
+              Navigator.pushNamed(context, "contratos");
+            },
+          ),
+          ListTile(
+            title: const Text('Costos', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.price_change),
+            onTap: () {
+              Navigator.pushNamed(context, "register");
+            },
+          ),
+          ListTile(
+            title: const Text('Coordinadores', style: TextStyle(color: Color(0xFF253D5B)),),
+            leading: const Icon(Icons.account_box_outlined),
+            onTap: () {
+              Navigator.pushNamed(context, "coordinadores");
+            },
+          ),
+          ListTile(
+            title: const Text('Cerrar Sesión', style: TextStyle(color: Color(0xFF253D5B)),),
             leading: const Icon(Icons.logout),
             onTap: _logout,
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('Eliminar cuenta'),
-            leading: const Icon(Icons.delete_forever),
-            onTap: _eliminarCuenta,
           )
         ],
       ),
@@ -78,47 +113,9 @@ class _NavbarState extends State<Navbar> {
           TextButton(onPressed: () async {
             await prefs.remove('nombre');
             await prefs.remove('id');
-            await prefs.remove('email');
-            await prefs.remove('telefono');
-            await prefs.remove('monedero');
-            await prefs.remove('destacado');
-            await prefs.remove('prime');
-            await prefs.remove('premiere');
-            await prefs.remove('pago');
-            await prefs.remove('card');
-            await prefs.remove('habilitar_tarjeta');
-            await prefs.remove('customer_conekta');
+            await prefs.remove('identificacion');
             await prefs.remove('active');
-            Navigator.popAndPushNamed(context, 'login');
-          }, child: const Text('Si, cerrar sesión'))
-        ],
-      );
-    });    
-  }
-
-  _eliminarCuenta() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    showDialog(context: context, builder: (_) {
-      return AlertDialog(
-        title: Text(appName),
-        content: Text('¿Esta seguro/a que desea salir de $appName?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancelar')),
-          TextButton(onPressed: () async {
-            await prefs.remove('nombre');
-            await prefs.remove('id');
-            await prefs.remove('email');
-            await prefs.remove('telefono');
-            await prefs.remove('monedero');
-            await prefs.remove('destacado');
-            await prefs.remove('prime');
-            await prefs.remove('premiere');
-            await prefs.remove('pago');
-            await prefs.remove('card');
-            await prefs.remove('habilitar_tarjeta');
-            await prefs.remove('customer_conekta');
-            await prefs.remove('active');
-            Navigator.popAndPushNamed(context, 'login');
+            Navigator.pushReplacementNamed(context, 'login');
           }, child: const Text('Si, cerrar sesión'))
         ],
       );
@@ -130,10 +127,10 @@ class _NavbarState extends State<Navbar> {
     if(prefs.getInt("id") != "null") {
       setState(() {
         _nombreUsuario = prefs.getString('nombre') ?? '';
-        _correoUsuario = prefs.getString('email') ?? '';
+        _correoUsuario = prefs.getString('identificacion') ?? '';
       });
     } else {
-      _nombreUsuario = "Inicia sesión o regístrate";
+      _nombreUsuario = "Inicia sesión";
     }
     
   }

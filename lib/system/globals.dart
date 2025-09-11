@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-
-String appName = 'Elotes Make';
-String appId = '4';
-String restId = '434';
+String dominio = '104.248.52.156';
+String appName = 'Casa di Maria';
+String appId = '1';
+String restId = '';
 double porcentajeConekta = 3.0;
 String osname = defaultTargetPlatform.name;
 String versionApp = "";
+final _url = Uri.http('104.248.52.156', '/api/v1/');
 final _currDt = DateTime.now();
 final headers = {
   'APPNAME' : appName,

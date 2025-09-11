@@ -1,6 +1,6 @@
-import 'package:elotes_make/system/arguments.dart';
+import 'package:cotizador_casa_di_maria/system/arguments.dart';
 import 'package:flutter/material.dart';
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:elotes_make/system/add_card_arguments.dart';
-import 'package:elotes_make/services/card_service.dart';
-import 'package:elotes_make/services/certificado_service.dart';
-import 'package:elotes_make/system/globals.dart';
-import 'package:elotes_make/system/pago_vale_arguments.dart';
-import 'package:elotes_make/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/system/add_card_arguments.dart';
+import 'package:cotizador_casa_di_maria/services/card_service.dart';
+import 'package:cotizador_casa_di_maria/services/certificado_service.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/pago_vale_arguments.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
 
 import '../models/Cards.dart';
 

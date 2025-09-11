@@ -1,7 +1,7 @@
-import 'package:elotes_make/models/Certificados.dart';
+import 'package:cotizador_casa_di_maria/models/Certificados.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 
 class CertificadoService {
   Future getCertificados() async {

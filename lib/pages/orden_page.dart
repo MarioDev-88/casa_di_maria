@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+//import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:elotes_make/models/Restaurant.dart';
-import 'package:elotes_make/services/restaurant_service.dart';
-import 'package:elotes_make/bloc/carrito/carrito_bloc.dart';
-import 'package:elotes_make/models/Pedido.dart';
-import 'package:elotes_make/system/globals.dart';
-import 'package:elotes_make/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/models/Restaurant.dart';
+import 'package:cotizador_casa_di_maria/services/restaurant_service.dart';
+//import 'package:cotizador_casa_di_maria/bloc/carrito/carrito_bloc.dart';
+import 'package:cotizador_casa_di_maria/models/Pedido.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
 
 import '../models/Cards.dart';
 import '../services/card_service.dart';
@@ -68,9 +68,7 @@ class _OrdenPageState extends State<OrdenPage> {
           }, icon: const Icon(Icons.help))
         ],
       ),
-      body: BlocBuilder<CarritoBloc, CarritoState>(
-        builder: (context, state) => InformacionOrdenPage(pedido: state.pedido!, data: response, total: state.total),
-      )
+      body: null
     );
   }
 }
@@ -550,14 +548,7 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
                     content: const Text('¿Seguro/a que desea eliminar este platillo?'),
                     actions: [
                       TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancelar')),
-                      TextButton(onPressed: () {                     
-                        BlocProvider.of<CarritoBloc>(context).add(CarritoDeleteEvent(index)); 
-                        setStateModal(() {
-                          setTotales();
-                          _pedido.removeAt(index);                          
-                        });
-                        Navigator.of(context).pop();
-                      }, child: const Text('Si, eliminar'))
+                      TextButton(onPressed: () {}, child: const Text('Si, eliminar'))
                     ],
                   );
                 });
@@ -955,7 +946,7 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
                 prefs.remove("pago");
                 prefs.remove("servicio");
                 Navigator.popUntil(context, ModalRoute.withName('select'));
-                BlocProvider.of<CarritoBloc>(context).add(CarritoInitialEvent("0"));
+                //BlocProvider.of<CarritoBloc>(context).add(CarritoInitialEvent("0"));
               }, child: const Text('Cerrar'),)
             ],
           );
@@ -1110,7 +1101,7 @@ class _InformacionOrdenPageState extends State<InformacionOrdenPage> {
                 prefs.remove("pago");
                 prefs.remove("servicio");
                 Navigator.popUntil(context, ModalRoute.withName('select'));
-                BlocProvider.of<CarritoBloc>(context).add(CarritoInitialEvent("0"));
+                //BlocProvider.of<CarritoBloc>(context).add(CarritoInitialEvent("0"));
               }, child: const Text('Cerrar'),)
             ],
           );

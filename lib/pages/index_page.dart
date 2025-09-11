@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
 // import 'package:location/location.dart';
 
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 class IndexPage extends StatefulWidget {
   const IndexPage({ Key? key }) : super(key: key);
 
@@ -18,7 +18,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   void initState() {
     // TODO: implement initState  
-    getLoc();  
+    //getLoc();  
     super.initState();      
     _loadPreferences();  
   }
@@ -26,10 +26,28 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(appName)),
-      backgroundColor: Colors.yellow,
-      body: Center(
-        child: Image.asset('assets/logo.png')
+      appBar: AppBar(title: const Text(""), backgroundColor: const Color(0xFFF5F1F1),),
+      backgroundColor: const Color(0xFFF5F1F1),
+      body: SafeArea(
+        child: DecoratedBox(
+          decoration: const BoxDecoration(          
+            image: DecorationImage(image: AssetImage("assets/fondo_casadimaria.jpeg"), fit: BoxFit.cover)
+          ),
+          child: Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: 
+                [
+                  Image.asset(
+                    'assets/LogoCasaDiMaria.png', // Asegúrate de añadir esta imagen a tu proyecto
+                  ),
+                  const CircularProgressIndicator()
+                ]
+              ),
+          ),
+        ),
       ),
     );
   }
@@ -47,6 +65,7 @@ class _IndexPageState extends State<IndexPage> {
         Navigator.popAndPushNamed(context, 'select');
       }      
     });
+    
   }
 
   getLoc() async {

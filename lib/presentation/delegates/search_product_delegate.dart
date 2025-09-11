@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:elotes_make/system/platillos_arguments.dart';
-import 'package:elotes_make/models/Product.dart';
-import 'package:elotes_make/services/product_service.dart';
+import 'package:cotizador_casa_di_maria/system/platillos_arguments.dart';
+import 'package:cotizador_casa_di_maria/models/Product.dart';
+import 'package:cotizador_casa_di_maria/services/product_service.dart';
 
 class ProductSearchDelegate extends SearchDelegate {   
   final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol:"\$");

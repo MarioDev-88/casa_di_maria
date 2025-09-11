@@ -5,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 // // Import for iOS features.
 // import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 
 class PoliticasPage extends StatefulWidget {
   const PoliticasPage({ Key? key }) : super(key: key);

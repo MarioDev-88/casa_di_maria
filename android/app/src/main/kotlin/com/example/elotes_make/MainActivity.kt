@@ -1,4 +1,4 @@
-package com.example.elotes_make
+package com.casadimaria.cotizadorcasadimaria
 
 import io.flutter.embedding.android.FlutterActivity
 

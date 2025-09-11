@@ -1,7 +1,7 @@
-import 'package:elotes_make/models/Cards.dart';
+import 'package:cotizador_casa_di_maria/models/Cards.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:elotes_make/system/globals.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CardService {

@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maps_launcher/maps_launcher.dart';
+//import 'package:maps_launcher/maps_launcher.dart';
 
-import 'package:elotes_make/themes/custom.dart';
-import 'package:elotes_make/system/arguments.dart';
-import 'package:elotes_make/system/globals.dart';
-import 'package:elotes_make/presentation/navbar.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/system/arguments.dart';
+import 'package:cotizador_casa_di_maria/system/globals.dart';
+import 'package:cotizador_casa_di_maria/presentation/navbar.dart';
 
 class SelectMainPage extends StatefulWidget {
   const SelectMainPage({ Key? key }) : super(key: key);
@@ -32,7 +32,7 @@ class _SelectMainPageState extends State<SelectMainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _fetchDetalle();
+    //_fetchDetalle();
   }
 
   @override
@@ -41,136 +41,24 @@ class _SelectMainPageState extends State<SelectMainPage> {
     return Scaffold(
       drawer: const Navbar(),
       appBar: AppBar(
-        title: const Center(child: Text('¿Que desea hacer?')),
-        actions: [
-          IconButton(
-            onPressed: () => setState(() {
-              _makePhoneCall(_telefono);
-            }), 
-            icon: const Icon(Icons.phone)),
-          IconButton(
-            onPressed: _goMap, 
-            icon: const Icon(Icons.location_on)
-          )
-        ],
+        title: const Center(child: Text('')),
+        backgroundColor: const Color(0xFFF5F1F1),
       ),
-      bottomNavigationBar: BottomAppBar(color: customTheme.primary,),
+      backgroundColor: const Color(0xFFF5F1F1),
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/fondo.jpg'), fit: BoxFit.cover)
+        child: DecoratedBox(
+          decoration: const BoxDecoration(          
+            image: DecorationImage(image: AssetImage("assets/fondo_casadimaria.jpeg"), fit: BoxFit.cover)
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/logo.png'),
-              const SizedBox(height: 40.0,),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [                  
-                  SizedBox(
-                    height: 50.0,
-                    width: 170.0,
-                    child: FilledButton(
-                      child: const Text(
-                        'Servicio a domicilio',
-                        style: TextStyle(
-                          fontSize: 16.5,
-                          fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      onPressed: _goDirectionRestaurant,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 170.0,
-                    height: 50.0,
-                    child: FilledButton(
-                      child: const Text(
-                        'Ordene y recoja',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      onPressed: _goRestaurant,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40.0,),
-              Row( 
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const SizedBox(
-                    height: 50.0,
-                    width: 170.0,
-                  ),
-                  SizedBox(
-                    height: 50.0,
-                    width: 170.0,
-                    child: Visibility(
-                      visible: _statusCheckin,
-                      child: FilledButton(
-                        child: const Text(
-                          'Check in',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600
-                          ),
-                        ),
-                        onPressed: _statusCheckin ? _openCheckin : null,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40.0,),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 50.0,
-                    width: 170.0,
-                    child: FilledButton(
-                      child: const Text(
-                        'Sugerencias',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      onPressed: _openModalSugerencia,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50.0,
-                    width: 170.0,
-                    child: Visibility(
-                      visible: _statusPromos,
-                      child: FilledButton(
-                        child: const Text(
-                          'Vale de regalo',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600
-                          ),
-                        ),
-                        onPressed: 
-                          _statusPromos ?
-                          _openVales
-                          : null,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/LogoCasaDiMaria.png'),
+              ],
+            ),
           ),
         ),
       ),
@@ -237,7 +125,7 @@ class _SelectMainPageState extends State<SelectMainPage> {
   }
   
   Future<void> _goMap() async {
-    MapsLauncher.launchQuery(_direccion);
+    //MapsLauncher.launchQuery(_direccion);
   }
 
   Future<void> _openModalSugerencia() async {

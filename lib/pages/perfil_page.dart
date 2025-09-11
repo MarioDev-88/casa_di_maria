@@ -1,4 +1,4 @@
-import 'package:elotes_make/themes/custom.dart';
+import 'package:cotizador_casa_di_maria/themes/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

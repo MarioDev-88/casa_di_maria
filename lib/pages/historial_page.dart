@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:elotes_make/services/historial_service.dart';
+import 'package:cotizador_casa_di_maria/services/historial_service.dart';
 
 class HistorialPage extends StatelessWidget {
   const HistorialPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:elotes_make/system/pago_vale_arguments.dart';
-import 'package:elotes_make/models/Certificados.dart';
-import 'package:elotes_make/services/certificado_service.dart';
+import 'package:cotizador_casa_di_maria/system/pago_vale_arguments.dart';
+import 'package:cotizador_casa_di_maria/models/Certificados.dart';
+import 'package:cotizador_casa_di_maria/services/certificado_service.dart';
 import 'package:intl/intl.dart';
 
 class ValesConsumoPage extends StatefulWidget {
