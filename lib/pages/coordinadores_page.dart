@@ -67,6 +67,7 @@ class _CoordinadoresPageState extends State<CoordinadoresPage> {
                   ],
                 ),
                 child: TextField(
+                  autocorrect: false,
                   controller: _searchController,
                   focusNode: _searchFocus,
                   decoration: InputDecoration(

@@ -46,6 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _precioParrillada = TextEditingController(text: "0");
   final TextEditingController _precioGuisos = TextEditingController(text: "0");
   final TextEditingController _precioJovenes = TextEditingController(text: "0");
+  final TextEditingController _precioRes = TextEditingController(text: "0");
   // Controladores para los campos de textp de platillos en promocion
   final TextEditingController _precioPolloPromo = TextEditingController(text: "0");
   final TextEditingController _precioPuercoPromo = TextEditingController(text: "0");
@@ -55,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _precioParrilladaPromo = TextEditingController(text: "0");
   final TextEditingController _precioGuisosPromo = TextEditingController(text: "0");
   final TextEditingController _precioJovenesPromo = TextEditingController(text: "0");
+  final TextEditingController _precioResPromo = TextEditingController(text: "0");
 
   @override
   void initState() {
@@ -77,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _precioParrillada.dispose();
     _precioGuisos.dispose();
     _precioJovenes.dispose();
+    _precioRes.dispose();
     super.dispose();
   }
   
@@ -198,6 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _precioParrillada.text = platillo[5].precio;
     _precioGuisos.text = platillo[6].precio;
     _precioJovenes.text = platillo[7].precio;
+    _precioRes.text = platillo[16].precio;
     // Promo
     _precioPolloPromo.text = platillo[8].precio;
     _precioPuercoPromo.text = platillo[9].precio;
@@ -207,6 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _precioParrilladaPromo.text = platillo[13].precio;
     _precioGuisosPromo.text = platillo[14].precio;
     _precioJovenesPromo.text = platillo[15].precio;
+    _precioResPromo.text = platillo[17].precio;
     return Column(
       children: [
         // Campos de Platillo
@@ -226,6 +231,8 @@ class _RegisterPageState extends State<RegisterPage> {
         const SizedBox(height: 15),
         _buildPriceRow(platillo[7].nombre, _precioJovenes, platillo[7].id, "platillo"),
         const SizedBox(height: 15),
+        _buildPriceRow(platillo[16].nombre, _precioRes, platillo[16].id, "platillo"),
+        const SizedBox(height: 15),
         _buildPriceRow(limpiarEncoding(platillo[8].nombre), _precioPolloPromo, platillo[8].id, "platillo"),
         const SizedBox(height: 15),
         _buildPriceRow(limpiarEncoding(platillo[9].nombre), _precioPuercoPromo, platillo[9].id, "platillo"),
@@ -241,6 +248,8 @@ class _RegisterPageState extends State<RegisterPage> {
         _buildPriceRow(limpiarEncoding(platillo[14].nombre), _precioGuisosPromo, platillo[14].id, "platillo"),
         const SizedBox(height: 15),
         _buildPriceRow(limpiarEncoding(platillo[15].nombre), _precioJovenesPromo, platillo[15].id, "platillo"),
+        const SizedBox(height: 15),
+        _buildPriceRow(limpiarEncoding(platillo[17].nombre), _precioResPromo, platillo[17].id, "platillo"),
       ],
     );
   }
