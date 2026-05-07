@@ -49,8 +49,7 @@ class CotizacionService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data)
     );
-    final _response = jsonDecode(_res.body);
-    print(_response);    
+    final _response = jsonDecode(_res.body);  
 
     if(_res.statusCode == 201) {
       return {

@@ -687,8 +687,9 @@ class _CotizarPageState extends State<CotizarPage> {
             )
           );
           String _isNone = value['data']['documento_url'].toString().split("/").last;
+          final box = context.findRenderObject() as RenderBox?;
           SharePlus.instance.share(
-            ShareParams(uri: Uri.http("104.248.52.156", "/cotizaciones/cotizaciones/${_isNone}")),
+            ShareParams(uri: Uri.http("104.248.52.156", "/cotizaciones/cotizaciones/${_isNone}"), sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size)
           );     
                
           //_flutterMediaDownloaderPlugin.downloadMedia(context, value['data']['documento_url']);
